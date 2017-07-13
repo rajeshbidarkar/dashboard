@@ -1,0 +1,125 @@
+<style>
+.ng-dirty.ng-invalid {
+  border-color: red;
+}
+.input-group{
+   width: 100%;
+}
+.input-group-addon{
+   width: 40%;
+   text-align: left;
+}
+.form-control {
+   width: 60%;
+}
+td {
+	padding-right: 60px;
+}​​​​​​​​​​​​​
+</style>
+<div class="content-wrapper">
+   <section class="content">
+	   <div style="width:800px; margin:0 auto;margin-left: 80px;">
+        <h3>Customer Details</h3>
+        <fieldset ng-disabled="added">
+    	<form name="form" ng-submit="saveContact()">        
+        <table class="table table-hover table-condensed table-striped table-bordered">
+        	
+        	<tr>
+		     	<td>
+		     		<div class="input-group">            		
+            			<span class="input-group-addon" ng-class="{ 'has-error': form.senior_manager.$dirty && form.senior_manager.$error.required }">Client Name</span>
+      					<input id="senior_manager" type="text" class="form-control" name="senior_manager" placeholder="Enter Client Name" ng-model="senior_manager" ng-pattern="/^[a-zA-Z ]*$/" required>
+            		</div>
+		        </td>
+		    </tr>
+        	
+        	<tr>
+        		<td>
+        			<div class="input-group">
+     					 <span class="input-group-addon" ng-class="{ 'has-error': form.vp.$dirty && form.vp.$error.required }">VP Name</span>
+      					<input id="vp" type="text" class="form-control" name="vp" placeholder="Enter VP name" ng-model="vp" ng-pattern="/^[a-zA-Z ]*$/" required>
+    				</div>
+        		</td> 
+        	</tr>
+       
+        	<tr>
+        		<td>
+        			<div class="input-group">
+     					 <span class="input-group-addon" ng-class="{ 'has-error': form.svp.$dirty && form.svp.$error.required }">SVP Name</span>
+      					 <input id="svp" type="text" class="form-control" name="svp" placeholder="Enter SVP name" ng-model="svp" ng-pattern="/^[a-zA-Z ]*$/" required>
+    				</div>
+        		</td>        	
+        		
+        	</tr>
+        	
+        	<tr>
+        		<td>
+		     		<div class="input-group">            		
+            			<span class="input-group-addon" ng-class="{ 'has-error': form.director.$dirty && form.director.$error.required }">Director Name</span>
+      					<input id="director" type="text" class="form-control" name="director" placeholder="Enter Director Name" ng-model="director" ng-pattern="/^[a-zA-Z ]*$/" required>
+            		</div>
+		        </td>
+		     </tr>
+		     
+		      <tr>
+		      	<td>
+		     		<div class="input-group">            		
+            			<span class="input-group-addon" ng-class="{ 'has-error': form.department_name.$dirty && form.department_name.$error.required }">Department Name</span>      					
+      					<select name="department_name" id="department_name" ng-model="department_name" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Interest Billing Application Development">Interest Billing Application Development</option>
+        					<option value="TAG">TAG</option>        					
+        					<option value="Anvil Business Analysis">Anvil Business Analysis</option>
+        					<option value="Consolidated Transaction Repository - CTR">Consolidated Transaction Repository - CTR</option>
+        					<option value="Collateral Management">Collateral Management</option>        					
+      					</select>
+            		</div>
+		        </td>		        
+		      </tr>
+		      
+		      <tr>
+		      	<td>
+		     		<div class="input-group">            		
+            			<span class="input-group-addon" ng-class="{ 'has-error': form.emailid.$dirty && form.emailid.$error.required }">Email</span>
+      					<input id="emailid" type="email" class="form-control" name="emailid" placeholder="Enter Email" ng-model="emailid" required>
+            		</div>
+		        </td>		    
+        	  </tr>
+        	  
+        	  <tr>
+        	  	<td>
+		     		<div class="input-group">            		
+            			<span class="input-group-addon" ng-class="{ 'has-error': form.emailtosendinvoice.$dirty && form.emailtosendinvoice.$error.required }">Email id to send invoice</span>
+      					<input id="emailtosendinvoice" type="email" class="form-control" name="emailtosendinvoice" placeholder="Enter Email id to send invoice" ng-model="emailtosendinvoice" required>
+            		</div>
+		        </td>
+        	  </tr>
+        	  
+        	  <tr>
+        	  	<td></td>        		
+        	  </tr>
+        	  
+        	  <tr>
+        	     <td>
+        			
+        		</td>
+        	  </tr>
+        </table>
+        <div style="margin:0 auto;margin-left: 300px;">
+        	 <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button> &nbsp;&nbsp;
+        	 <input data-target="#addcontact" type="reset" value="Reset" class="btn btn-warning">           			
+             <a data-target="#data" ui-sref="data" class="btn btn-link">Cancel</a>
+        </div>
+    </form> 
+    </fieldset> 
+    <div class="alert alert-success" ng-show="added">    	
+  		<a href="#addcontact" class="close" ng-click="clean(form)"  data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+	<div class="alert alert-danger" ng-show="notAdded">    	
+  		<a href="#addcontact" class="close" ng-click="clean(form)"  data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+    </div>
+	</section>
+  </div>

@@ -1,0 +1,1 @@
+dashboardApp.constant('_', window._);

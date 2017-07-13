@@ -1,0 +1,319 @@
+<style>
+td {
+  text-align: left;
+  padding-left: 5px;
+  padding-right   : 5px;
+  max-width: 100px !important;
+  word-wrap: break-word;
+  border: 1px solid #ccc;   
+}
+Table {
+  table-layout: fixed;  
+}
+th {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  background: #3c8dbc;
+  color: #fff;
+}
+html, body {
+  height: 100%;
+}
+.modal-dialog{
+    position: relative;
+    display: table; 
+    overflow-y: auto;    
+    overflow-x: auto;
+    width: 60%;
+    min-width: 300px;   
+}      
+</style>
+<style>
+
+.alreadyExpire{
+   background-color:red;
+}	    
+.normal, .noidea {
+   background-color:white;
+}
+.renewalDue {
+   background-color:#ffa1a8;
+}
+</style>
+<div class="content-wrapper" ng-controller="sowController">
+<!-- Main content -->
+<section class="content">
+	<div role="row" style="margin-left: 40px;" ng-init="init()">        
+    <div class="bs-component">
+        <h3>SOW Details</h3>        
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Search</label>
+                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+        </form>        
+        <br>
+        <table style="table-layout:fixed" class="table table-responsive" ng-show="sows.length>0">
+            <thead>
+            <tr>
+                <th ng-click="sort('id')" width="3%">ID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>                
+                <th width="15%">Client Name</th>
+                <th width="20%">MSAT SPOC Email ID</th>
+                <th>WA Number</th>
+                <th width="15%">Contract Type</th>                                
+                <th width="15%">Project Name</th>
+                <th>Msat PID</th>                
+                <th>Contract No</th>
+                <th width="6%">Action</th>                 
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="sow in sows|orderBy:sortKey:reverse|filter:search|itemsPerPage:5" ng-class="getClass(sow)">
+				<td>{{ $index +1 }}</td>
+				<td>{{ sow.client }}</td>
+				<td>{{ sow.msatsopocemailid }}</td>
+				<td>{{ sow.wanumber }}</td>
+				<td>{{ sow.contracttype }}</td>
+				<td>{{ sow.projectname }}</td>
+				<td>{{ sow.msatpid }}</td>
+				<td>{{ sow.contractno }}</td>
+				<td><span data-toggle="modal" data-target="#updateSOW" class="glyphicon glyphicon-new-window icon-green" ng-click="edit(sow)"></span>
+                    <span data-toggle="modal" data-target="#updateSOW" class="glyphicon glyphicon-trash icon-white" ng-model="checked" ng-click="delete(sow)" style="color:#FF0000;"></span>
+                    <span data-toggle="modal" data-target="#selectResource" class="glyphicon glyphicon-user" ng-click="editResourceList(sow)" ng-model="checked"></span>                                        
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        </dir-pagination-controls>
+        
+        <!-- Modal -->
+		  <div class="modal fade" id="updateSOW" role="dialog">
+		    <div class="modal-dialog">      
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">SOW Details</h4>		          
+		        </div>
+		        <div class="modal-body">
+		          <form class="form" novalidate>
+		               	<div class="form-group col-xs-4">
+		                    <label> Client Name:</label>
+		                    <input type="text" name="client" id="client" ng-model="sow.client" class="form-control" ng-disabled="true" required>
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> MSAT SPOC Email ID:</label>
+		                    <input type="text" name="msatsopocemailid" id="msatsopocemailid" ng-model="sow.msatsopocemailid" class="form-control" ng-disabled="true" required>
+		                </div>
+		                 <div class="form-group col-xs-4">
+		                    <label> WA Number:</label>
+		                    <input id="wanumber" type="text" class="form-control" name="wanumber" ng-model="sow.wanumber" ng-disabled="deleteSOW" required>  
+		                </div>		                		                
+		                <div class="form-group col-xs-4">
+		                    <label> Contract Type:</label>
+		                    <select name="contracttype" id="contracttype" ng-model="sow.contracttype" class="form-control" ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>
+	        					<option value="Other Prof Services">Other Prof Services</option>
+	        					<option value="Contract Programming">Contract Programming</option>        					
+	        					<option value="Datacom Expenses">Datacom Expenses</option>
+	        					<option value="Post Approval">Post Approval</option>
+	        					<option value="Software Maintanence">Software Maintanence</option>
+	        					<option value="Consulting">Consulting</option>
+	        					<option value="Operational">Operational</option>
+      						</select>		                    
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Record Type:</label>
+		                    <select name="recordtype" id="recordtype" ng-model="sow.recordtype" class="form-control" ng-disabled="deleteSOW" required>
+        						<option value="">Please select</option>
+        						<option value="Master">Master</option>
+        						<option value="Associate">Associate</option>        					
+      						</select>		                    
+		                </div>
+		               <div class="form-group col-xs-4">
+		                    <label> WA Type:</label>
+		                     <select name="watype" id="watype" ng-model="sow.watype" class="form-control" ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>
+	        					<option value="TANDM">T&M</option>
+	        					<option value="FB">FB</option>
+	      					</select>	
+		                </div>
+		                <div class="form-group col-xs-4">
+		                   <label> OP Number:</label>
+		                    <input type="text" name="opnumber" id="opnumber" ng-model="sow.opnumber" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Project Name:</label>
+		                    <input type="text" name="projectname" id="projectname" ng-model="sow.projectname" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>		               
+		                <div class="form-group col-xs-4">
+		                    <label> WA Status:</label>
+		                    <select name="wastatus" id="wastatus" ng-model="sow.wastatus" class="form-control" ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>        					
+	        					<option value="SOW to be Initiated">SOW to be Initiated</option>
+	        					<option value="SOW Submitted">SOW Submitted</option>
+	        					<option value="SOW Cancelled">SOW Cancelled</option>
+	        					<option value="SOW Signed">SOW Signed</option>
+	        					<option value="PO Pending">PO Pending</option>
+	        					<option value="PO Closed">PO Closed</option>
+	        					<option value="PO Received">PO Received</option>
+	      					</select>		                    
+		                </div>	                
+		                <div class="form-group col-xs-4">
+		                    <label> Start Date:</label>
+		                    <input type="date" name="startdate" id="startdate" value={{sow.startdate}} ng-model="sow.startdate" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>
+						<div class="form-group col-xs-4">
+		                    <label> Expiry Date:</label>
+		                    <input type="date" name="expirydate" id="expirydate" value={{sow.expirydate}} ng-model="sow.expirydate" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>
+						<div class="form-group col-xs-4">
+		                    <label> WA Status Date:</label>
+		                    <input type="date" name="wastatusdate" id="wastatusdate" value={{sow.wastatusdate}} ng-model="sow.wastatusdate" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>
+						<div class="form-group col-xs-4">
+		                    <label> MSAT PID:</label>
+		                    <input type="text" name="msatpid" id="msatpid" ng-model="sow.msatpid" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Contract No:</label>
+		                    <input type="text" name="contractno" id="contractno" ng-model="sow.contractno" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>						
+		                <div class="form-group col-xs-4">
+		                    <label> WA Amount:</label>
+		                    <input type="number" name="waamount" id="waamount" ng-model="sow.waamount" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>												
+						<div class="form-group col-xs-4">
+		                    <label> Location:</label>
+		                    <select name="location" id="location" ng-model="sow.location" class="form-control" ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>
+	        					<option value="Onsite">Onsite</option>
+	        					<option value="Offshore">Offshore</option>        					
+	      					</select>
+		                </div>
+						<div class="form-group col-xs-4">
+		                    <label> Tag:</label>
+		                    <select name="tag" id="tag" ng-model="tag" class="form-control"  ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>
+	        					<option value="Yes">Yes</option>
+	        					<option value="No">No</option>
+	      					</select>
+		                </div>						
+		                <div class="form-group col-xs-4">
+		                    <label> WA Balance:</label>
+		                    <input type="number" name="wabalance" id="wabalance" ng-model="sow.wabalance" class="form-control" ng-disabled="deleteSOW" required>
+		                </div>		                					
+						<div class="form-group col-xs-4">
+		                    <label> Upside:</label>
+		                    <select name="upside" id="upside" ng-model="sow.upside" class="form-control" ng-disabled="deleteSOW" required>
+	        					<option value="">Please select</option>
+	        					<option value="No">No</option>
+	        					<option value="Yes">Yes</option>        					
+	      					</select>
+		                </div>						          
+		            </form>
+		        </div>        
+		        <div class="modal-footer" ng-show="editSOW == true">
+		          <button button type="button" class="btn btn-primary" ng-click="updateSOWDetails(sow)">Save</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		        <div class="modal-footer" ng-show="deleteSOW == true">
+		          <button button type="button" class="btn btn-primary"  ng-click="deleteSOWDetails(sow)">Delete</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>		        
+		      </div>		      
+		    </div>
+		  </div>
+		  
+		  <!-- Modal -->
+		  <div class="modal fade" id="selectResource" role="dialog"  ng-controller="resoureController" >
+		    <div class="modal-dialog">      
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Associate List</h4>		          
+		        </div>
+		        <div class="modal-body" ng-init="init()">
+		          <div class="bs-component">
+		            <form class="form-inline">
+			            <div class="form-group">
+			                <label>Search</label>
+			                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+			            </div>
+			        </form>        
+			        <br>
+			        <table class="table table-responsive">
+			            <thead>
+			                <tr>
+			                <th ng-click="sort('id')">ID
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>                
+			                <th>Name</th>
+			                <th>MSAT PID</th>
+			                <th>Location</th>
+			                <th>Billing Rate</th>
+			                <th>Action</th>			                
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr dir-paginate="resource in resources|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+							<td>{{ $index +1 }}</td>
+							<td>{{ resource.associatename }}</td>
+							<td>{{ resource.msatpid }}</td>
+							<td>{{ resource.location }}</td>
+							<td>{{ resource.billingrate }}</td>				
+							<td>
+								<button button type="button" ng-click="addToResourceList(resource)" class="btn btn-primary">Add</button>							                    
+			                </td>
+			            </tr>
+			            </tbody>
+			        </table>
+			        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        			</dir-pagination-controls>
+			     </div>
+			     <div>
+			     <table class="table table-responsive" ng-show="sow.associates.length!==0">
+			            <thead>
+			                <tr>
+			                <th>ID			                    
+			                </th>                
+			                <th>Name			                    
+			                </th>
+			                <th>Action			                    
+			                </th>			                
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr ng-repeat="associate in sow.associates">
+							<td>{{ associate.id }}</td>
+							<td>{{ associate.associatename }}</td>											
+							<td>
+								<span data-toggle="modal" class="glyphicon glyphicon-trash icon-white" ng-model="checked" ng-click="removeFromResourceList(associate)" style="color:#FF0000;"></span>															                    
+			                </td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>    
+		        </div>        
+		        <div class="modal-footer">
+		          <button button type="button" class="btn btn-primary" ng-click="saveResourceLists()">Save</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>		        
+		      </div>		      
+		    </div>
+		  </div>
+		   <!-- Modal -->
+		  		  
+		  <div class="alert alert-success" ng-show="updated">    	
+  			<a class="close" ng-click="clean(form)" aria-label="close">&times;</a>
+  				<strong>{{message}}</strong> 
+		  </div>
+		  <div class="alert alert-danger" ng-show="error">    	
+  				<a class="close" ng-click="clean()"  data-dismiss="alert" aria-label="close">&times;</a>
+  				<strong>{{message}}</strong> 
+		  </div>
+    </div>         
+</section>
+</div>

@@ -1,0 +1,197 @@
+<style>
+td {
+  text-align: left;
+  padding-left: 5px;
+  padding-right   : 5px;
+  max-width: 100px !important;
+  word-wrap: break-word;
+  border: 1px solid #ccc;   
+}
+Table {
+  table-layout: initial; 
+  text-align:center; 
+}
+th {
+  border: 1px solid #ccc;
+  
+  background: #3c8dbc;
+  color: #fff;
+}
+html, body {
+  height: 100%;
+}
+.modal-dialog{
+    position: relative;
+    display: table; 
+    overflow-y: auto;    
+    overflow-x: auto;
+    width: 60%;
+    min-width: 300px;   
+}      
+</style>
+<div class="content-wrapper" ng-controller="resoureController">
+<!-- Main content -->
+<section class="content">
+	<div role="row" style="margin-left: 40px;" ng-init="init()">        
+    <div class="bs-component">
+        <h3>Associate List</h3>        
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Search</label>
+                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+        </form>        
+        <br>
+        <table style="table-layout:fixed" class="table table-sm table-inverse">
+            <thead>
+                <tr>
+                <th ng-click="sort('id')">ID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>                
+                <th>Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='associatename'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Reporting Manager
+					<span class="glyphicon sort-icon" ng-show="sortKey=='reportingmanager'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>MSAT PID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='msatpid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Location
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Billing Rate
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='billingrate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Status
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Inactive Reason
+					<span class="glyphicon sort-icon" ng-show="sortKey=='inactivereason'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>
+                    Remarks
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='remarks'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th  width="15%">
+                    Email id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='emailid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th  width="15%">
+                    Scotia Mail ID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='scotiaemailid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>
+                    Action
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='scotiaemailid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="resource in resources|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+				<td>{{ resource.associateid }}</td>
+				<td>{{ resource.associatename }}</td>
+				<td>{{ resource.reportingmanager }}</td>
+				<td>{{ resource.msatpid }}</td>
+				<td>{{ resource.location }}</td>
+				<td>{{ resource.billingrate }}</td>				
+				<td>{{ resource.status }}</td>
+				<td>{{ resource.inactivereason }}</td>
+				<td>{{ resource.remarks }}</td>
+				<td>{{ resource.emailid }}</td>
+				<td>{{ resource.scotiaemailid }}</td>
+                <td><span data-toggle="modal" data-target="#updateResource" class="glyphicon glyphicon-edit icon-white" ng-click="edit(resource)"></span>
+                    <span data-toggle="modal" data-target="#updateResource" class="glyphicon glyphicon-trash icon-white" ng-model="checked" ng-click="delete(resource)" style="color:#FF0000;"></span>                    
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        </dir-pagination-controls>
+        <!-- Modal -->
+		  <div class="modal fade" id="updateResource" role="dialog">
+		    <div class="modal-dialog">      
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Resource Details</h4>		          
+		        </div>
+		        <div class="modal-body">
+		          <form class="form" novalidate>
+		                <div class="form-group col-xs-4">
+		                    <label> Associate ID:</label>
+		                    <input type="text" name="associateid" id="associateid" ng-model="resource.associateid" class="form-control" ng-disabled="true">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Associate Name:</label>
+		                    <input type="text" name="associatename" id="associatename" ng-model="resource.associatename" class="form-control" ng-disabled="true">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Reporting Manager:</label>
+		                    <input type="text" name="reportingmanager" id="reportingmanager" ng-model="resource.reportingmanager" class="form-control" ng-disabled="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> MSAT PID:</label>
+		                    <input type="text" name="msatpid" id="msatpid" ng-model="resource.msatpid" class="form-control" ng-disabled="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                   <label> Location:</label>
+		                   <select name="location" id="location" ng-model="resource.location" class="form-control" required ng-disabled="deleteResource">
+	        					<option value="" selected disabled>Please select</option>
+	        					<option value="Onsite">Onsite</option>
+	        					<option value="Offshore">Offshore</option>        					
+      						</select>		                    
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label>Billing Rate:</label>
+		                    <input type="number" name="billingrate" id="billingrate" ng-model="resource.billingrate" class="form-control" ng-readonly="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Status:</label>
+		                    <select name="status" id="status" ng-model="resource.status" class="form-control" ng-disabled="deleteResource" required>
+        						<option value="" selected disabled>Please select</option>
+        						<option value="Active">Active</option>
+        						<option value="Inactive">Inactive</option>        					
+      						</select>		                   
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Inactive Reason:</label>
+		                    <input type="text" name="inactivereason" id="inactivereason" ng-model="resource.inactivereason" class="form-control" ng-readonly="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Remarks:</label>
+		                    <input type="text" name="remarks" id="remarks" ng-model="resource.remarks" class="form-control" ng-readonly="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Email id:</label>
+		                    <input type="email" name="emailid" id="emailid" ng-model="resource.emailid" class="form-control" ng-readonly="deleteResource">
+		                </div>
+		                <div class="form-group col-xs-4">
+		                    <label> Scotia Mail ID:</label>
+		                    <input type="email" name="scotiaemailid" id="scotiaemailid" ng-model="resource.scotiaemailid" class="form-control" ng-readonly="deleteResource">
+		                </div>          
+		            </form>
+		        </div>        
+		        <div class="modal-footer" ng-show="editResource == true">
+		          <button button type="button" class="btn btn-primary" ng-click="updateResourceDetails(resource)">Save</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		        <div class="modal-footer" ng-show="deleteResource == true">
+		          <button button type="button" class="btn btn-primary"  ng-click="deleteResourceDetails(resource)">Delete</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>		      
+		    </div>
+		  </div>
+		   <!-- Modal -->
+		  <div class="alert alert-success" ng-show="updated">    	
+  			<a class="close" ng-click="clean(form)" aria-label="close">&times;</a>
+  				<strong>{{message}}</strong> 
+		  </div>
+		  <div class="alert alert-danger" ng-show="error">    	
+  				<a class="close" ng-click="clean()"  data-dismiss="alert" aria-label="close">&times;</a>
+  				<strong>{{message}}</strong> 
+		  </div>
+    </div>         
+</section>
+</div>

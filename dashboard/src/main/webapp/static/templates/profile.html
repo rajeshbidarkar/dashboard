@@ -1,0 +1,91 @@
+<div class="content-wrapper">
+   <section class="content">
+	   <div style="width:800px; margin:0 auto;margin-left: 100px;" ng-controller="mainController">
+                <form name="userForm"  novalidate>
+                    <table>
+                    	<tr>
+                    		<td>	
+                    			<label class="font">Username : </label>                    			
+                    		</td>
+                    		<td>
+                    			<input type="email" name="name" class="form-control" ng-model="name" required/>
+                    			<br>
+                    		</td>
+                    		<td>
+                    			<div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">                        
+                        			<span ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Please enter a valid email.</span>
+                    			</div>
+                    		</td>
+                    	</tr>
+                    	
+                    	<tr>
+                    		<td>
+                    			<label  class="font">OLD Password : </label>
+                    		</td>
+                    		<td>
+                    			<input type="password" name="password" class="form-control" ng-model="password" required ng-minlength="8" ng-maxlength="12">
+                    			<br>
+                    		</td>
+                    		<td>
+                    			<div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">                        
+                        			<p ng-show="userForm.password.$invalid && !userForm.password.$pristine">Password is required.</p>
+                        			<p ng-show="userForm.password.$error.minlength" >Password should have atleast 8 characters.</p>
+                        			<p ng-show="userForm.password.$error.maxlength">Password should have maximum 12 characters.</p>
+                    			</div>
+                    		</td>
+                    	</tr>
+                    	
+                    	<tr>
+                    		<td>
+                    			<label  class="font">New Password : </label>
+                    		</td>
+                    		<td>
+                    			<input type="password" name="newpassword" class="form-control" ng-model="newpassword" required ng-minlength="8" ng-maxlength="12">
+                    			<br>
+                    		</td>
+                    		<td>
+                    			<div class="form-group" ng-class="{ 'has-error' : userForm.newpassword.$invalid && !userForm.newpassword.$pristine }">
+			                        <p ng-show="userForm.newpassword.$invalid && !userForm.newpassword.$pristine">Password is required.</p>
+			                        <p ng-show="userForm.newpassword.$error.minlength" >Password should have atleast 8 characters.</p>
+			                        <p ng-show="userForm.newpassword.$error.maxlength">Password should have maximum 12 characters.</p>
+			                    </div>
+                    		</td>
+                    	</tr>
+                    	
+                    	<tr>
+                    		<td>
+                    			<label  class="font">Confirm New Password : </label>
+                    		</td>
+                    		<td>
+                    			<input type="password" ng-change="confirmPassword()" name="cpassword" class="form-control" ng-model="cpassword" required ng-minlength="8" ng-maxlength="12">
+                    			<br>
+                    		</td>
+                    		<td>
+                    			<div class="form-group" ng-class="{ 'has-error' : userForm.cpassword.$invalid && !userForm.cpassword.$pristine }">
+                    			    <p ng-show="userForm.cpassword.$invalid && !userForm.cpassword.$pristine">Password is required.</p>
+                        			<p ng-show="userForm.cpassword.$error.minlength" >Password should have atleast 8 characters.</p>
+                        			<p ng-show="userForm.cpassword.$error.maxlength">Password should have maximum 12 characters.</p>
+                    			</div>
+                    
+                    		</td>
+                    	</tr>
+                    	
+                    	<tr>
+                    		<td>
+                    			
+                    		</td>
+                    		<td>
+                    			<div class="align-center">
+                    				<button type="submit" class="btn btn-primary font" ng-disabled="userForm.$invalid || !register" ng-click="updatePassword()">Update</button>
+								</div>                     			
+                    		</td>
+                    		<td>
+                    			                   
+                    		</td>
+                    	</tr>
+                    </table>
+					{{message}}
+                </form>            
+         </div>
+  </section>
+</div>

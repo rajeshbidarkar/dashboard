@@ -1,0 +1,109 @@
+<style>
+.ng-dirty.ng-invalid {
+  border-color: red;
+}
+.input-group{
+   width: 100%;
+}
+.input-group-addon{
+   width: 40%;
+   text-align: left;
+}
+.form-control {
+   width: 60%;
+}
+td {
+  text-align: left;
+  padding-left: 5px;
+  padding-right   : 5px;
+  max-width: 100px !important;
+  word-wrap: break-word;
+  border: 1px solid #ccc; 
+  width: auto; 
+}
+Table {
+  table-layout: fixed;  
+}
+th {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  background: #3c8dbc;
+  color: #fff;
+}
+html, body {
+  height: 100%;
+}​​​​​​​​​​​​​
+</style>
+<div class="content-wrapper">
+    <section class="content">
+	 <div class="row">
+        <div class="col-lg-3 col-xs-6">
+        	<h3>Customer</h3> 
+            <div class="inner" ng-init="init()">
+    				<div id="container" data="{data}" draw-pie-chart="" style="height: 250px; width: 100%;"></div>	          
+              	<table class="table table-responsive">                
+                <tr>
+               		 <th>Department</th>
+					 <th>Percentage</th>
+				</tr>
+                <tr ng-repeat="data in data">
+					<td>{{ data.name }}</td>
+					<td>{{ data.y }}</td>							
+				</tr>
+				</table>			
+            </div>
+           	<a data-target="#viewall" ui-sref="viewall" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div>
+            <div class="inner" ng-controller="resoureController">
+            
+            <h3>Resource</h3>
+            <div class="inner" ng-init="init()">
+    			<div id="container2" data="{data}" draw-pie-chart="" style="height: 250px; width: 100%;"></div>	          
+              	<table class="table table-responsive">                
+                <tr>
+               		 <th>Status</th>
+					 <th>Percentage</th>
+				</tr>
+                <tr ng-repeat="data in data">
+					<td>{{ data.name }}</td>
+					<td>{{ data.y }}</td>							
+				</tr>
+				</table>			
+            </div>
+            	<a data-target="#viewallresource" ui-sref="viewallresource" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>           
+          </div>
+        </div>
+        
+        <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div>
+            <div class="inner" ng-controller="sowController">
+            
+            <h3>WA Master</h3>
+            <div class="inner" ng-init="init()">
+    			<div id="container3" data="{data}" draw-pie-chart="" style="height: 250px; width: 100%;"></div>	          
+              	<table class="table table-responsive">                
+                <tr>
+               		 <th>Status</th>
+					 <th>Percentage</th>
+				</tr>
+                <tr ng-repeat="data in data">
+					<td>{{ data.name }}</td>
+					<td>{{ data.y }}</td>							
+				</tr>
+				</table>			
+            </div>
+            	<a data-target="#viewallsow" ui-sref="viewallsow" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>           
+          </div>
+        </div>
+        
+    </div>       
+	</section>
+</div>

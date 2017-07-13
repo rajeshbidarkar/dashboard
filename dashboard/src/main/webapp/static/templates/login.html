@@ -1,0 +1,36 @@
+	<div  ng-controller="mainController">	
+    <div id="mainWrapper">
+			<div class="login-container">
+				<div class="login-card">
+				<div class="login-form">
+                <form name="userForm"  novalidate>
+          			 <div class="input-group input-sm"  ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+						<label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+						<input type="email" name="name" class="form-control" placeholder="Enter Username" ng-model="name" required>
+						<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" >Please enter a valid email.</p>
+					 </div>
+					<div class="input-group input-sm"  ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+						<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+						<input type="password" name="password" class="form-control" placeholder="Enter Password" ng-model="password" required ng-minlength="8" ng-maxlength="12">
+						<br><p ng-show="userForm.password.$invalid && !userForm.password.$pristine">Password is required.</p>
+                    	<p ng-show="userForm.password.$error.minlength" >Password is too short.</p>
+                    	<p ng-show="userForm.password.$error.maxlength">Password is too long.</p>
+					</div>
+					<div class="input-group input-sm">
+                        <div class="checkbox">
+                    	 
+                    	</div>
+                    </div>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-block btn-primary btn-default" ng-disabled="userForm.$invalid" ng-click="login()">Log in</button>								
+					</div>
+                	<div class="animated  fadeIn" ng-if="invalid">
+ 							Invalid Username / Password.
+					</div>
+				</form>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    </div>

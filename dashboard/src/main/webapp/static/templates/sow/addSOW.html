@@ -1,0 +1,434 @@
+<style>
+.ng-dirty.ng-invalid {
+  border-color: red;
+}
+.input-group{
+   width: 100%;
+}
+.input-group-addon{
+   width: 40%;
+   text-align: left;
+}
+.form-control {
+   width: 60%;
+}
+td {
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 60px;
+  max-width: 100px !important;
+  word-wrap: break-word;
+  border: 1px solid #ccc;   
+}
+Table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  background: #3c8dbc;
+  color: #fff;
+}
+.modal-dialog{
+    position: relative;
+    display: table; 
+    overflow-y: auto;    
+    overflow-x: auto;
+    width: 60%;
+    min-width: 300px;   
+}
+.angucomplete-holder {
+    position: relative;
+}
+.angucomplete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    width: 250px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    /*top: 32px;
+    left: 0px;
+    */
+    overflow-y: auto;
+    max-height: 200px;
+    margin-top: -6px;
+    background-color: #ffffff;
+    border-radius: 4;  
+}
+
+.angucomplete-searching {
+    color: #acacac;
+    font-size: 14px;
+}
+
+.angucomplete-description {
+    font-size: 14px;
+}
+
+.angucomplete-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+    clear: both;
+}
+
+.angucomplete-selected-row {
+    background-color: lightblue;
+    color: #ffffff;
+}
+
+.angucomplete-image-holder {
+    padding-top: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.angucomplete-image {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border-color: #ececec;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.angucomplete-image-default {
+    /* Add your own default image here
+     background-image: url('/assets/default.png');
+    */
+    background-position: center;
+    background-size: contain;
+    height: 34px;
+    width: 34px;
+}
+input[type=searchqq] {
+    padding-left: 2rem;
+    width: 100%;
+    height: 3rem;
+    border-radius: 4;  
+}
+
+</style>
+
+
+<div class="content-wrapper">
+   <section class="content">   
+	   <div style="width:800px; margin:0 auto;margin-left: 80px;" ng-init="init()">
+	   <form name="form" id="form" ng-submit="saveSOW()">	    
+	    <h3>SOW Details</h3>
+        <table class="table table-hover table-condensed table-striped table-bordered table-responsive">
+        	<tr>
+        		<td>
+        			<div class="input-group">
+        			<span class="input-group-addon">Client Name</span>
+      					<div angucomplete-alt id="clientname" 
+    					placeholder="Search Client Name"
+    					type="searchqq"
+    					selected-object="selectedObject"
+    					local-data="contacts"
+    					search-fields="senior_manager"
+    					title-field="senior_manager"
+    					minlength="1"
+    					maxlength="10"
+    					pause="15"
+    					inputclass="form-control"
+    					match-class="highlight"
+    					text-no-results='false' enable-clear-search-btn="true" 
+    					text-searching='false' field-required="true" override-suggestions="true"/>      				       					
+      				</div>
+        		</td>
+        		<td>
+        		 <div class="input-group">
+        		   <span class="input-group-addon" ng-class="{ 'has-error': form.wanumber.$dirty && form.wanumber.$error.required }">WA Number</span>
+      			   <input id="wanumber" type="text" class="form-control" name="wanumber" placeholder="Enter WA Number" ng-model="wanumber" required>
+      			 </div>        		  		
+        	   </td>         		       		
+        	</tr>        		        
+        	
+        	<tr>
+        		<td>
+        			<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.msatspocemailid.$dirty && form.msatspocemailid.$error.required }">SPOC Email ID</span>
+      					<input id="msatspocemailid" type="email" class="form-control" name="msatspocemailid" placeholder="Enter MSAT SPOC Email ID" ng-model="msatspocemailid" required>
+      				</div>        			
+        		</td> 
+        		 <td>
+        		 <div class="input-group">
+        		   <span class="input-group-addon" ng-class="{ 'has-error': form.watype.$dirty && form.watype.$error.required }">WA Type</span>
+        		   		<select name="watype" id="watype" ng-model="watype" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="TANDM">T&M</option>
+        					<option value="FB">FB</option>
+      					</select>
+      			   <!-- <input id="watype" type="text" class="form-control" name="watype" placeholder="Enter WA Type" ng-model="watype" required> -->
+      			 </div>        		  		
+        	   </td>	     	
+		    </tr>
+		    
+		    <tr> 
+        		<td>
+		     		<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.contracttype.$dirty && form.contracttype.$error.required }">Contract Type</span>
+      					<select name="contracttype" id="contracttype" ng-model="contracttype" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Other Prof Services">Other Prof Services</option>
+        					<option value="Contract Programming">Contract Programming</option>        					
+        					<option value="Datacom Expenses">Datacom Expenses</option>
+        					<option value="Post Approval">Post Approval</option>
+        					<option value="Software Maintanence">Software Maintanence</option>
+        					<option value="Consulting">Consulting</option>
+        					<option value="Operational">Operational</option>
+      					</select>
+      					<!-- <input id="contracttype" type="text" class="form-control" name="contracttype" placeholder="Enter Contract Type" ng-model="contracttype" required> -->
+      				</div>
+		     	</td>
+		     	<td>
+        		 <div class="input-group">
+        		    <span class="input-group-addon"  ng-class="{ 'has-error': form.wastatus.$dirty && form.wastatus.$error.required }">WA Status</span>
+        		    	<select name="wastatus" id="wastatus" ng-model="wastatus" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>        					
+        					<option value="SOW to be Initiated">SOW to be Initiated</option>
+	        				<option value="SOW Submitted">SOW Submitted</option>
+	        				<option value="SOW Cancelled">SOW Cancelled</option>
+	        				<option value="SOW Signed">SOW Signed</option>
+	        				<option value="PO Pending">PO Pending</option>
+	        				<option value="PO Closed">PO Closed</option>
+	        				<option value="PO Received">PO Received</option>
+      					</select>      				
+      			 </div>        			            	         		
+        	   </td>		     			     	
+		    </tr>
+		     
+		    <tr>
+		    	<td>
+		      	 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.recordtype.$dirty && form.recordtype.$error.required }">Record Type</span>
+        				<select name="recordtype" id="recordtype" ng-model="recordtype" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Master">Master</option>
+        					<option value="Associate">Associate</option>        					
+      					</select>
+      					<!-- <input id="recordtype" type="text" class="form-control" name="recordtype" placeholder="Enter Record Type" ng-model="recordtype" required> -->
+      				</div>		      		
+		      	</td>
+		      	<td>
+        	  		<div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.wastatusdate.$dirty && form.wastatusdate.$error.required }">WA Status Date</span>
+      					<input id="wastatusdate" type="date" class="form-control" name="wastatusdate" placeholder="WA Status Date" ng-model="wastatusdate" required>
+      				</div>
+        	  	</td>
+		    </tr>
+
+        	<tr>        	  
+        	  <td>
+        		 <div class="input-group">
+        		   <span class="input-group-addon" ng-class="{ 'has-error': form.opnumber.$dirty && form.opnumber.$error.required }">OP Number</span>
+      			   <input id="opnumber" type="text" class="form-control" name="opnumber" placeholder="Enter OP Number" ng-model="opnumber" required>
+      			 </div>        		  		
+        	   </td>
+        	   <td>
+        		 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.startdate.$dirty && form.startdate.$error.required }">Start Date</span>
+      					<input id="startdate" type="date" class="form-control" name="startdate" placeholder="Enter Start Date" ng-model="startdate" required>
+      			 </div>        		  		
+        	  </td>
+            </tr>
+        	
+        	<tr>        	  
+         	  <td>
+        		 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.projectname.$dirty && form.projectname.$error.required }">Project Name</span>
+      					<input id="projectname" type="text" class="form-control" name="projectname" placeholder="Enter Project Name" ng-model="projectname" required>
+      			 </div>        		  		
+        	  </td>   
+
+        	  <td>
+        	  	<div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.expirydate.$dirty && form.expirydate.$error.required }">Expiry Date</span>
+      					<input id="expirydate" type="date" class="form-control" name="expirydate" placeholder="Enter Expiry Date" ng-model="expirydate" required>
+      			</div>
+        	  </td>        			        	   
+        	</tr>
+        	
+        	<tr>
+        	  <td>
+		      	 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.location.$dirty && form.location.$error.required }">Location</span>
+      					<select name="location" id="location" ng-model="location" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Onsite">Onsite</option>
+        					<option value="Offshore">Offshore</option>        					
+      					</select>      					
+      			</div>		      		
+		      </td>
+        	  <td>
+        		 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.waamount.$dirty && form.waamount.$error.required }">WA Amount</span>
+      					<input id="waamount" type="number" class="form-control" name="waamount" placeholder="Enter WA Amount" ng-model="waamount" required>
+      			 </div>        		  		
+        	  </td>
+        	</tr>
+        	<tr>
+        	  <td>
+        		 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.msatpid.$dirty && form.msatpid.$error.required }">Msat PID</span>
+      					<input id="msatpid" type="text" class="form-control" name="msatpid" placeholder="Enter Msat PID" ng-model="msatpid" required>
+      			 </div>        		  		
+        	  </td>
+        	  <td>
+        	  	<div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.wabalance.$dirty && form.wabalance.$error.required }">WA Balance</span>
+      					<input id="wabalance" type="number" class="form-control" name="wabalance" placeholder="Enter WA Balance" ng-model="wabalance" required>
+      			</div>
+        	  </td>        	     
+        	</tr>
+        	
+        	<tr>
+        	  <td>
+        	  	<div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.contractno.$dirty && form.contractno.$error.required }">Contract No</span>
+      					<input id="contractno" type="text" class="form-control" name="contractno" placeholder="Enter Contract No" ng-model="contractno" required>
+      			</div>
+        	  </td>
+        	  <td>
+        			<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.tag.$dirty && form.tag.$error.required }">Tag</span>
+        				<select name="tag" id="tag" ng-model="tag" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Yes">Yes</option>
+        					<option value="No">No</option>
+      					</select>      					
+      				</div>
+        		</td>        	  
+            </tr>
+        	
+        	<tr>
+        		<td>
+        		  	<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.upside.$dirty && form.upside.$error.required }">Upside</span>
+      					<select name="upside" id="upside" ng-model="upside" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="No">No</option>
+        					<option value="Yes">Yes</option>        					
+      					</select>      					
+      					<!-- <input id="status" type="text" class="form-control" name="status" placeholder="Status" ng-model="status" required> -->
+      				</div>
+        		  </td>
+        		  <td>
+        		  	<!-- <div class="input-group">
+        				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectResource">Add Resource</button>
+      				</div> -->
+        		  </td>        		
+        	</tr>        	     	
+        </table>
+        	<div style="margin:0 auto;margin-left: 300px;">
+        		  <button type="submit" class="btn btn-primary">Save</button>  &nbsp;&nbsp;           			
+            	  <input type="reset" value="Reset" class="btn btn-warning">
+            	  <a data-target="#data" ui-sref="data" class="btn btn-link">Cancel</a> 
+        	</div>
+    </form>
+    <div class="alert alert-success" ng-show="added">
+    	<a class="close" ng-click="clean()" data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+	<div class="alert alert-danger" ng-show="notAdded">    	
+  		<a class="close" ng-click="clean()"  data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+    </div>
+    
+   <!-- Modal -->
+		  <div class="modal fade" id="selectResource" role="dialog"  ng-controller="resoureController" >
+		    <div class="modal-dialog">      
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Associate List</h4>		          
+		        </div>
+		        <div class="modal-body" ng-init="init()">
+		          <div class="bs-component">
+		            <form class="form-inline">
+			            <div class="form-group">
+			                <label>Search</label>
+			                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+			            </div>
+			        </form>        
+			        <br>
+			        <table class="table table-responsive">
+			            <thead>
+			                <tr>
+			                <th ng-click="sort('id')">ID
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>                
+			                <th>Name
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='associatename'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>
+			                <th>MSAT PID
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='msatpid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>
+			                <th>Location
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>
+			                <th>Billing Rate
+			                    <span class="glyphicon sort-icon" ng-show="sortKey=='billingrate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+			                </th>
+			                <th>Action			                    
+			                </th>			                
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr dir-paginate="resource in resources|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+							<td>{{ resource.id }}</td>
+							<td>{{ resource.associatename }}</td>
+							<td>{{ resource.msatpid }}</td>
+							<td>{{ resource.location }}</td>
+							<td>{{ resource.billingrate }}</td>				
+							<td>
+								<button button type="button" ng-click="addToResourceList(resource)" class="btn btn-primary">Add</button>							                    
+			                </td>
+			            </tr>
+			            </tbody>
+			        </table>
+			        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        			</dir-pagination-controls>
+			     </div>
+			     <div>
+			     <table class="table table-responsive" ng-show="selected == true">
+			            <thead>
+			                <tr>
+			                <th>ID			                    
+			                </th>                
+			                <th>Name			                    
+			                </th>
+			                <th>Action			                    
+			                </th>			                
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr ng-repeat="associate in associates">
+							<td>{{ associate.id }}</td>
+							<td>{{ associate.associatename }}</td>											
+							<td>
+								<span data-toggle="modal" class="glyphicon glyphicon-trash icon-white" ng-model="checked" ng-click="removeFromResourceList(associate)" style="color:#FF0000;"></span>															                    
+			                </td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>    
+		        </div>        
+		        <div class="modal-footer" ng-show="selected == true">
+		          <button button type="button" class="btn btn-primary" ng-click="saveResourceLists()">Save</button>
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>		        
+		      </div>		      
+		    </div>
+		  </div>
+		   <!-- Modal -->
+	</section>
+  </div>

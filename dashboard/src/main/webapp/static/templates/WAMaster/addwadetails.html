@@ -1,0 +1,146 @@
+<style>
+.ng-dirty.ng-invalid {
+  border-color: red;
+}
+.input-group{
+   width: 100%;
+}
+.input-group-addon{
+   width: 40%;
+   text-align: left;
+}
+.form-control {
+   width: 60%;
+}
+td {
+	padding-right: 60px;
+}​​​​​​​​​​​​​
+</style>
+
+<div class="content-wrapper">
+   <section class="content">   
+	   <div style="width:800px; margin:0 auto;margin-left: 80px;" ng-init="init()">
+	   <form name="form" id="form" ng-submit="saveResource()">	    
+	    <h3>Resource Details</h3>
+        <table class="table table-hover table-condensed table-striped table-bordered">
+        	<tr>
+        		<td>
+        			<div class="input-group">
+     					 <span class="input-group-addon" ng-class="{ 'has-error': form.id.$dirty && form.id.$error.required }">Associate ID</span>
+      					<input id="id" type="number" class="form-control" name="id" placeholder="Associate ID" ng-model="id" required>
+    				</div>
+        		</td>
+        		<td>
+        			<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.associatename.$dirty && form.associatename.$error.required }">Associate Name</span>
+      					<input id="associatename" type="text" class="form-control" name="associatename" placeholder="Associate Name" ng-model="associatename" ng-pattern="/^[a-zA-Z ]*$/" required>
+      				</div>
+        		</td>        		
+        	</tr>        		        
+        	
+        	<tr>
+        		<td>
+        			<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.reportingmanager.$dirty && form.reportingmanager.$error.required }">Reporting Manager</span>
+      					<input id="reportingmanager" type="text" class="form-control" name="reportingmanager" placeholder="Reporting Manager" ng-model="reportingmanager" ng-pattern="/^[a-zA-Z ]*$/" required>
+      				</div>        			
+        		</td>
+        		<td>
+		     		<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.msatpid.$dirty && form.msatpid.$error.required }">MSAT PID</span>
+      					<input id="msatpid" type="text" class="form-control" name="msatpid" placeholder="MSAT PID" ng-model="msatpid" required>
+      				</div>
+		     	</td>		     	
+		    </tr>
+		     
+		    <tr>
+		       <td>
+		      	 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.location.$dirty && form.location.$error.required }">Location</span>
+      					<select name="location" id="location" ng-model="location" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Onsite">Onsite</option>
+        					<option value="Offshore">Offshore</option>        					
+      					</select>
+      					<!-- <input id="location" type="text" class="form-control" name="location" placeholder="Location" ng-model="location" required> -->
+      				</div>		      		
+		      	</td>
+		      	<td>
+        		  	<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.status.$dirty && form.status.$error.required }">Status</span>
+      					<select name="status" id="status" ng-model="status" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="Active">Active</option>
+        					<option value="Inactive">Inactive</option>        					
+      					</select>
+      					<!-- <input id="status" type="text" class="form-control" name="status" placeholder="Status" ng-model="status" required> -->
+      				</div>
+        		  </td>
+		    </tr>		     
+        	
+        	<tr>
+        	   <td>
+        		 <div class="input-group">
+        		   <span class="input-group-addon" ng-class="{ 'has-error': form.inactivereason.$dirty && form.inactivereason.$error.required }">Inactive Reason</span>
+      			   <input id="inactivereason" type="text" class="form-control" name="inactivereason" placeholder="Inactive Reason" ng-model="inactivereason" required>
+      			 </div>        		  		
+        	   </td>
+        	   <td>
+        		 <div class="input-group">
+        		    <span class="input-group-addon"  ng-class="{ 'has-error': form.remarks.$dirty && form.remarks.$error.required }">Remarks</span>
+      				<input id="remarks" type="text" class="form-control" name="remarks" placeholder="Remarks" ng-model="remarks" required>
+      			 </div>        			            	         		
+        	   </td>
+        	</tr>
+        	
+        	<tr>
+        	  <td>
+        	  	<div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.emailid.$dirty && form.emailid.$error.required }">Email id</span>
+      					<input id="emailid" type="text" class="form-control" name="emailid" placeholder="Email id" ng-model="emailid" required>
+      			</div>
+        	  </td>
+        	  <td>
+        		 <div class="input-group">
+        			<span class="input-group-addon"  ng-class="{ 'has-error': form.scotiaemailid.$dirty && form.scotiaemailid.$error.required }">Scotia Mail ID</span>
+      					<input id="scotiaemailid" type="text" class="form-control" name="scotiaemailid" placeholder="Scotia Mail ID" ng-model="scotiaemailid" required>
+      			 </div>        		  		
+        	  </td>
+            </tr>
+        	
+        	<tr>
+        		<td>
+        			<div class="input-group">
+        			<span class="input-group-addon" ng-class="{ 'has-error': form.band.$dirty && form.band.$error.required }">Band</span>
+        				<select name="band" id="band" ng-model="band" class="form-control" required>
+        					<option value="" selected disabled>Please select</option>
+        					<option value="P1">P1</option>
+        					<option value="P2">P2</option>        					
+        					<option value="U1">U1</option>
+        					<option value="U2">U2</option>
+        					<option value="U3">U3</option>
+        					<option value="U4">U4</option>
+        					<option value="Sub Con">Sub Con</option>
+        					<option value="NA">NA</option>
+      					</select>      					
+      				</div>
+        		</td>        		
+        	</tr>        	     	
+        </table>
+        	<div style="margin:0 auto;margin-left: 300px;">
+        		  <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>  &nbsp;&nbsp;           			
+            	  <input type="reset" value="Reset" class="btn btn-warning">
+            	  <a data-target="#data" ui-sref="data" class="btn btn-link">Cancel</a> 
+        	</div>
+    </form>
+    <div class="alert alert-success" ng-show="added">
+    	<a class="close" ng-click="clean()" data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+	<div class="alert alert-danger" ng-show="notAdded">    	
+  		<a class="close" ng-click="clean()"  data-dismiss="alert" aria-label="close">&times;</a>
+  		<strong>{{message}}</strong> 
+	</div>
+    </div>
+	</section>
+  </div>
